@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
-const modules = require('./modules');
-const users = modules.users;
+const routes = require('./routes');
+const users = routes.users;
 const app = express();
 const port = 3000;
 // const router = require('express').Router();
@@ -27,6 +27,8 @@ app.listen(port, () => {
 
 app.use('/', express.static('./pages/fetchTest'))
 
+app.use('/meals', express.static('./pages/mealPlanner'))
+
 app.get('/users', (req, res) => {
   console.log(users.userList);
   res.send(users.userList);
@@ -47,7 +49,7 @@ app.put('/users', (req, res) => {
 
 app.delete('/users', (req, res) => {
   var deleteId = req.body.deleteId;
-    deleteUser(deleteId);
+    users.deleteUser(deleteId);
 })
 
 app.get('/test', (req, res) => {

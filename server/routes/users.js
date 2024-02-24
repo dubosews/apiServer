@@ -7,10 +7,6 @@ var activeFlaggedUserDB = [];
 var activeDeletedUserDB = [];
 
 
-// var testId = userDB[6].id;
-// var test = userDB.find((user) => user.id === testId);
-
-
 
 exports.addUser = (newUserData) => {
     console.log('active user count: '+activeUserCount);
@@ -40,20 +36,12 @@ exports.addUser = (newUserData) => {
         }else if(verifyNewUserData === false && verifyNewUserId !== undefined){
             return 'id: "idUnavailable", userData: ' + verifyNewUserData;
         }
-        
-    // var  = userDB.find((user) => user.id === testId);
-    // if(n === 0) {
-    //   addUsertoCache(newUserData);
-    //   return 'New User Added';
-    // }else{
-    //     console.log('User Already Saved');
-    //     return 'User Already Saved';
-    // }
 }
 
 exports.deleteUser = (data) => {
     var updateActiveUserDB = [];
     var deleteUserId = data;
+    console.log('delete user: '+deleteUserId);
     // var userPosition = 0;
     for(i = 0; i < activeUserDB.length; i++){
         var loopDeleteId = activeUserDB[i].id;
@@ -68,15 +56,12 @@ exports.deleteUser = (data) => {
         var userDataVerify = verifyUserData(user);
         console.log(userDataVerify);
             if(userDataVerify === true){
-                
                 updateActiveUserDB.push(user);
             }
     })
 
     updateUserDB(updateActiveUserDB);
 }
-
-    
 
     addUsertoCache = (data) => {
         var newUser = data;
@@ -103,79 +88,6 @@ exports.deleteUser = (data) => {
 fetchActiveUserDB = () => {
     activeUserDB = [];  
     verifyUserDBFile();
-    // var nullCheck = userDB.find((user) => user === null);
-    // console.log(nullCheck);
-    // var nullDelete = userDB.find((user) => user === null);
-    // console.log(nullDelete.index);    
-    // delete nullDelete;
-        // userDB.forEach(user => {
-        //     console.log(user);
-            
-        //     if(user = null){
-        //         console.log("NULL ENTRY")
-        //         }
-        //             var verifyUserId = user.id;
-        //             var verifyUserNameFirst = user.nameFirst;
-        //             var verifyUserNameLast = user.nameLast;
-        //             else if(verifyUserId.length > 0 && verifyUserNameFirst.length > 0 && verifyUserNameLast.length > 0){
-        //             console.log("true");
-                    
-        //             console.log(verifyUserId);
-        //             console.log(verifyUserNameFirst);
-        //             console.log(verifyUserNameLast);
-        //             }else{
-        //                 console.log("nope");
-        //             }
-                
-        // })
-        // console.log(userDB[20].nameFirst);
-        // var verifyUserId = userDB[20].id;
-        // var verifyUserNameFirst = userDB[20].nameFirst;
-        // var verifyUserNameLast = userDB[20].nameLast;
-        // console.log(verifyUserId);
-        // console.log(verifyUserNameFirst);
-        // console.log(verifyUserNameLast);
-        //     if(verifyUserId.length > 0 && verifyUserNameFirst.length > 0 && verifyUserId.length > 0){
-        //         console.log("true");
-        //     }else{
-        //         console.log("nope");
-        //     }
-        // console.log(userDB[20].id);
-        // var testId = userDB[20].id;
-        // console.log(testId.length);
-        //     if(testId.length < 1){
-        //         console.log("true");
-        //     }else{
-        //         console.log("nope");
-        //     }
-        // console.log(userDB[20].nameFirst);
-        // var testFirst = userDB[20].nameFirst;
-        // console.log(testFirst.length);
-        //     if(testFirst.length < 1){
-        //         console.log("true");
-        //     }else{
-        //         console.log("nope");
-        //     }
-    // console.log(userDB[19].nameLast);
-    // var test = userDB[19].nameLast;
-    // console.log(test.length);
-    //     if(test.length < 1){
-    //         console.log("true");
-    //     }else{
-    //         console.log("nope");
-    //     }
-   
-  
-    // userDB.forEach(user => {
-    //     var checkId = user.id;
-    //     var checkNameFirst = user.nameFirst;
-    //     var checkNameLast = user.nameLast;
-    //     // if(user = null){
-
-    //     // }
-    //     activeUserDB.push(user);
-    // })
-    // console.log(activeUserDB);
 }
 
 // Verify User Database Entries Before Import
@@ -319,77 +231,6 @@ saveNewFlaggedUsers = () => {
         console.log("vvv FLAGGED USER DB SAVED vvv");
         console.log(flaggedUserDB);
 }
-
-    // importUserDB = () => {
-    //     console.log('FILTERED UserDB Import || # of Flagged Users: '+activeFlaggedUserDB.length);
-    //         const importFilterIndexArray = [];
-    //             activeFlaggedUserDB.forEach(flaggedUser => {
-    //                 var flaggedUserIndex = flaggedUser.index;
-    //                 importFilterIndexArray.push(flaggedUserIndex);
-    //             })
-    //                 console.log('vvv importFilterIndexArray vvv');
-    //                 console.log(importFilterIndexArray);
-
-    //             for(i = 0; userDB.length > i; i++){
-    //                 var flaggedUserFilter = importFilterIndexArray.find((flaggedIndex) => flaggedIndex === i);
-    //                 // console.log(flaggedUserFilter);
-    //                     if(flaggedUserFilter === undefined){
-    //                         activeUserDB.push(userDB[i]);
-    //                     }
-    //             }
-
-            // let arrayPostion = 0;    
-                // userDB.forEach(user => {
-                //     var importUserFilter = importFilterIndexArray.forEach(filterIndex => {
-                //             // console.log('importPositionLoop');
-                //             // console.log(position);
-                //             // console.log(arrayPostion);
-                //             if(filterIndex === arrayPostion){
-                //                 console.log('match');
-                //                 break;
-                //             }else{
-                //                 console.log('Ready');
-                //                 return false;
-                //             }
-                //         });
-                //         console.log(importUserFilter);
-                //             // if(importUserFilter = undefined){
-                //             //     console.log(user);
-                //             //     activeUserDB.push(user);
-                //             // }else{
-                //             //     console.log('vvv Flagged User Detected, Not Added to Active DB vvv');
-                //             //     console.log(user);
-                //             // }
-                //     arrayPostion ++;
-                // })
-                //     for(let i = 0; userDB.length > i; i++){
-                //     var importUserFilter = importFilterIndexArray.find(i);
-                //     if(importUserFilter = undefined){
-                //         activeUserDB.push(userDB[i]);
-                //     }else{
-                //         console.log('vvv Flagged User Detected, Not Added to Active DB vvv');
-                //         console.log(userDB[i]);
-                //     }
-                // }
-    //         var activeUserDBCheck = userDB.length - importFilterIndexArray.length;
-    //             if(activeUserDB.length = activeUserDBCheck){
-    //                 console.log('Filtered Import User Count Match');
-    //                 console.log(activeUserDB);
-    //             }else{
-    //                 console.log('Failed: Filter Array Length = '+importFilterIndexArray.length);
-    //                 console.log('Failed: userDB Array Length = '+userDB.length);
-    //                 console.log('Failed: activeUserDB Array Length = '+activeUserDB.length);
-    //             }
-                
-    // }
-
-        // indexSearch = (index, current) => {
-        //     console.log(index);
-        //     var indexStr = JSON.stringify(index);
-        //     return index;
-        // }
-
-
 
 fetchActiveUserDB();
 
