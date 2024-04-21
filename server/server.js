@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const routes = require('./routes');
+const { userList } = require('./routes/users');
 const users = routes.users;
 const app = express();
 const port = 3000;
@@ -30,7 +31,8 @@ app.use('/', express.static('./pages/fetchTest'))
 app.use('/meals', express.static('./pages/mealPlanner'))
 
 app.get('/users', (req, res) => {
-  console.log(users.userList);
+  var test = users.userList;
+  console.log(test);
   res.send(users.userList);
 })
 
