@@ -1,12 +1,46 @@
 const fs = require('fs');
-const userDB = require('../database/userList.json');
-const flaggedUserDB = require('../database/flaggedUserDB.json');
+// const userDB = require('../database/userList.json');
+var flaggedUserDB = require('../database/flaggedUserDB.json');
+const { send } = require('process');
+const { response } = require('express');
 var activeUserDB = [];
     let activeUserCount = 0;
 var activeFlaggedUserDB = [];
 var activeDeletedUserDB = [];
 
 
+
+syncActiveUserDBFile = () => {
+   activeUserDB = [];
+    fs.readFile('./database/userList.json', 'utf8', function(err, data) { 
+            if (err) 
+                console.log(err); 
+            else { 
+                var parsedDBFileData = JSON.parse(data);
+                
+                    for(i = 0; parsedDBFileData.length > i; i++){
+                        activeUserDB.push(parsedDBFileData[i]);
+                    }
+                console.log(activeUserDB);
+                return true;
+            }
+    });
+}
+
+    // syncActiveUserDBFile().then(
+exports.fetchUsers = () => {
+    syncActiveUserDBFile();
+    var dataParse = JSON.parse(activeUserDB);
+    var userExportList = [];
+    activeUserDB.forEach(user => {
+        userExportList.push(user);
+    })
+    
+    return JSON.stringify(userExportList);
+    //     if(console.log(test) = true) {
+    //         return test;
+    // }  
+}
 
 exports.addUser = (newUserData) => {
     console.log('active user count: '+activeUserCount);
@@ -42,34 +76,26 @@ exports.deleteUser = (data) => {
     var updateActiveUserDB = [];
     var deleteUserId = data;
     console.log('delete user: '+deleteUserId);
-    // var userPosition = 0;
-    for(i = 0; i < activeUserDB.length; i++){
-        var loopDeleteId = activeUserDB[i].id;
-        if(loopDeleteId === deleteUserId){
-            // console.log(activeUserDB[i]);
-            activeDeletedUserDB.push(activeUserDB[i]);
-                delete activeUserDB[i];
-        }
-    }
-
-    activeUserDB.map(user => {
-        var userDataVerify = verifyUserData(user);
-        console.log(userDataVerify);
-            if(userDataVerify === true){
-                updateActiveUserDB.push(user);
+        for(i = 0; i < activeUserDB.length; i++){
+            var loopDeleteId = activeUserDB[i].id;
+            if(loopDeleteId === deleteUserId){
+                console.log(activeUserDB[i]);
+            }else{
+                updateActiveUserDB.push(activeUserDB[i]);
             }
-    })
-
+        }
+    // activeUserDB = updateActiveUserDB;
+    console.log(updateActiveUserDB);
     updateUserDB(updateActiveUserDB);
 }
 
-    addUsertoCache = (data) => {
-        var newUser = data;
-        console.log(newUser);
-        activeUserDB.push(newUser);
-        console.log('New User Added to userCache');
-        writeUserCacheDB();
-    }
+    // addUsertoCache = (data) => {
+    //     var newUser = data;
+    //     console.log(newUser);
+    //     activeUserDB.push(newUser);
+    //     console.log('New User Added to userCache');
+    //     writeUserCacheDB();
+    // }
 
     updateUserDB = (params) => {
         var userDataStr = JSON.stringify(params);
@@ -80,15 +106,11 @@ exports.deleteUser = (data) => {
                     console.log(err); 
                 else { 
                     console.log("File written successfully\n");
-                    fetchActiveUserDB();
+                    syncActiveUserDBFile();
                 }
             });
     }
 
-fetchActiveUserDB = () => {
-    activeUserDB = [];  
-    verifyUserDBFile();
-}
 
 // Verify User Database Entries Before Import
 
@@ -118,7 +140,12 @@ verifyUserData = (userData) => {
     }
 }
 
-verifyUserDBFile = () => {
+
+
+fetchActiveUserDBA = () => {
+    var userDB = require('../database/userList.json');
+    activeUserDB = [];
+    console.log('activeUserDB Length: '+activeUserDB.length)
     activeFlaggedUserDB = [];
         for(var i = 0; userDB.length > i; i++){
             // var loopUserObj = userDB[i];
@@ -136,8 +163,8 @@ verifyUserDBFile = () => {
                         ){
                             activeUserDB.push(userDB[i]);
                                 activeUserCount = i;
-                                console.log('213 || Active User Count: '+activeUserCount);
-                                console.log('214 || Active User Count.length: '+activeUserDB.length);
+                                // console.log('213 || Active User Count: '+activeUserCount);
+                                // console.log('214 || Active User Count.length: '+activeUserDB.length);
                         }
                         // Else Catch for User Entries Not NULL but Not Complete
                         else{
@@ -163,10 +190,11 @@ verifyUserDBFile = () => {
         if(activeFlaggedUserDB.length > 0){
             // If Flagged Entries from UserDB Were Detected, They are added to ./db/flaggedUserDB  
             saveNewFlaggedUsers();
-            updateUserDB(activeUserDB);
+            console.log('Test');
+            // updateUserDB(activeUserDB);
         }
         
-        console.log(activeUserDB);
+        // console.log(activeUserDB);
         // Run UserDB Import Function
         // importUserDB();
 }
@@ -232,6 +260,8 @@ saveNewFlaggedUsers = () => {
         console.log(flaggedUserDB);
 }
 
-fetchActiveUserDB();
+syncActiveUserDBFile();
 
 exports.userList = activeUserDB;
+
+
